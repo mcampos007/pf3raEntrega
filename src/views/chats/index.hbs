@@ -1,0 +1,35 @@
+
+<div class="main main-raised">
+    <h2 class="title">{{ saludo.msg }}</h2>
+    <div class="container">
+        <div class="section text-center">
+            <h2 class="title">{{rotulos.title}}</h2>
+            <div class="card-body">
+                <div class="card-body">
+                    <div class="section text-center">
+                    <h2 class="title">Tu email:<p id="email">{{data.email}}</p></h2>
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">group</i>
+                                    </span>
+                                    <input type="text" id="chatBox" class="form-control" placeholder="Ingrese su Mensaje">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <p id="messageLogs"></p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>
