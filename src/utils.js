@@ -6,10 +6,13 @@ import { log } from 'console';
 //import {PRIVATE_KEY}  from  "./config/.env.js";
 import config from "./config/config.js";
 import passport from 'passport';
+import { faker } from '@faker-js/faker';
 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const categories = ["category_1", "category_2", "category_3", "category_4", "category_3"];
+
 
 // Generamos el hash
 export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(10));
@@ -97,4 +100,31 @@ export const authorization = (role) => {
     }
 };
 
+//Generacion de productos
+export const generateProduct = (index) => {
+    const randomCategory = faker.helpers.arrayElement(categories);
+
+    return {
+        title: faker.commerce.productName(),
+        description:faker.commerce.productDescription(),
+        code:`P-${String(index).padStart(8, '0')}`,
+        price: faker.commerce.price(),
+        status:true,
+        category:randomCategory,
+        stock: Number(faker.number.bigInt({ min: 10n, max: 100n })),
+      // id: faker.database.mongodbObjectId(),
+        thumbnail: Array.from({ length: 3 }, () => faker.image.url())
+    }
+};
 export default __dirname;
+
+
+/*
+ 
+ 
+ 
+ 
+ 
+ 
+    thumbnail: { type: [String]
+*/

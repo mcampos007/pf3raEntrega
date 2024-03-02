@@ -1,9 +1,88 @@
 //import ProductService from "../services/db/products.service.js";
 //import { productService } from "../services/factory.js";
 import { cartService, productService, ticketService } from "../services/service.js";
+import nodemailer from 'nodemailer';
+import config from '../config/config.js';
+import __dirname from '../utils.js';
+
 
 import CartDTO from "../services/dto/cart.dto.js";
+//import { sendEmail } from "./email.controller.js";
 
+// configurar el transport
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    port: 587,
+    auth: {
+      user: config.gmailAccount,
+      pass: config.gmailAppPassword,
+    },
+  });
+
+  // verificar conexxion
+transporter.verify(function (error, success) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Server is ready to take our messages');
+    }
+  });
+
+  const mailOptions = {
+    from: 'email test - ' + config.gmailAccount,
+    to: '',
+    subject: '',
+    html: ``,
+    attachments: [],
+  };
+  
+  function makeTicketDetailForEmail(tkobj){
+    // Construir la tabla HTML dinámicamente
+    const tableRows = tkobj.products.map(product => `
+    <tr>
+    <td>${product.product}</td>
+    <td>${product.quantity}</td>
+    <td>${product.price}</td>
+    <td>${product.quantity * product.price}</td>
+    </tr>
+    `).join('');
+
+    const totalItems = tkobj.products.reduce((acc, product) => acc + product.quantity, 0);
+    const totalAmount = tkobj.products.reduce((acc, product) => acc + (product.quantity * product.price), 0);
+
+
+    const tableHTML = `
+        <table>
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            ${tableRows}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="3">Total Items:</td>
+                <td>${totalItems}</td>
+            </tr>
+            <tr>
+                <td colspan="3">Total Amount:</td>
+                <td>${totalAmount.toFixed(2)}</td>
+            </tr>
+            </tfoot>
+        </table>
+        `;
+
+    const emailContent = `
+        <p>Detalles del Ticket:</p>
+        ${tableHTML}
+      `;
+    return emailContent
+  }
 
 //getAll, save, , addProductToCart, deleteProductToCart, deleteCart
 
@@ -150,13 +229,65 @@ export const purchaseCart = async(req, res) =>{
         // 6        Retunr noprocesados (id)
         console.log("Resultado de la actualizacioin del cart")
         console.log(result);
-        const resultemp = {status: "En desarrollo", ticket: ticketObj, noProcesados: arrNoProcesados, result:result};
+        console.log("Envio de mail")
+        console.log("Ticket")
+        console.log(ticket)
+        console.log("Ticket fin")
+        
+        mailOptions.to=ticketObj.purchaser
+        mailOptions.subject = "Detalle de su compra"
+        mailOptions.html= ` <div>
+                                ${makeTicketDetailForEmail(ticket)}
+                            </div>`
+        console.log(mailOptions)
+        
+
+        let resultMail = transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+            res.status(400).send({ message: 'Error', payload: error });
+        } else {
+            console.log('Message sendt: %s', info.messageId);
+            res.send({ message: 'Success', payload: info });
+        }
+        })
+        console.log(resultMail)
+        const resultemp = {status: "Success", ticket: ticketObj, noProcesados: arrNoProcesados, result:result};
+        // Enviar email al comprador
+
         res.status(201).send(resultemp);  
     } catch (error) {
         console.error(error);
         res.status(500).send({ error: error, message: "No se pudo actualizar Finalizar la compra." });
     }
 }
+
+
+
+function sendEmail(data) {
+    console.log("datos del tk")
+        console.log(data)
+        return data
+    /* try {
+        console.log("datos del tk")
+        console.log(data)
+      let result = transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+          res.status(400).send({ message: 'Error', payload: error });
+        } else {
+          console.log('Message sendt: %s', info.messageId);
+          res.send({ message: 'Success', payload: info });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        error: error,
+        messages: 'No se pudo enviar el mail desde:' + config.gmailAccount,
+      });
+    } */
+  };
 /* export const findByTitle = async(req, res)=>{
     try {
         let {title} = req.params;

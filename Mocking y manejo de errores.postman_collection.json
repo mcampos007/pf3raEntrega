@@ -1,0 +1,244 @@
+{
+	"info": {
+		"_postman_id": "0aba243f-cbae-4468-836a-ddc4f1f214c5",
+		"name": "Mocking y manejo de errores",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31125899",
+		"_collection_link": "https://orange-moon-137435.postman.co/workspace/New-Team-Workspace~d607b7a8-4760-4761-aa22-82d07d620a2e/collection/31125899-0aba243f-cbae-4468-836a-ddc4f1f214c5?action=share&source=collection_link&creator=31125899"
+	},
+	"item": [
+		{
+			"name": "Testing_Cart",
+			"item": [
+				{
+					"name": "loginUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"crivelli@infocam.com.ar\",\r\n    \"password\":\"123qwe\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/extend/users/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"extend",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_Cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJjcml2ZWxsaSBjcml2ZWxsaSIsImVtYWlsIjoiY3JpdmVsbGlAaW5mb2NhbS5jb20uYXIiLCJhZ2UiOjU1LCJyb2xlIjoidXNlciIsInVzZXJJZCI6IjY1ZTBmNjhjMmEyNTc3YTBiNjJmMzUwYSJ9LCJpYXQiOjE3MDkzOTEyOTAsImV4cCI6MTcwOTM5MTg5MH0.SAeFxnx6c9S4wMhaKmzEN6s1EtnXoBwt-RYC9MgGv_E\"",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n  {\"products\": [\r\n    {\r\n      \"product\": \"65cfa581592ba66eacf65474\"  // Reemplaza con un ID de producto existente\r\n    },\r\n    {\r\n      \"product\": \"65d5005944f47ffa4b263b86\"  // Reemplaza con un ID de producto existente\r\n    },\r\n    {\r\n      \"product\": \"65d513db803208c0bc1a5402\"  // Reemplaza con un ID de producto existente\r\n    },\r\n    {\r\n      \"product\": \"65dcf28d558b5d4936703bf6\"  // Reemplaza con un ID de producto existente\r\n    }\r\n  ]}\r\n   ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/carts",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Purchase",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJjcml2ZWxsaSBjcml2ZWxsaSIsImVtYWlsIjoiY3JpdmVsbGlAaW5mb2NhbS5jb20uYXIiLCJhZ2UiOjU1LCJyb2xlIjoidXNlciIsInVzZXJJZCI6IjY1ZTBmNjhjMmEyNTc3YTBiNjJmMzUwYSJ9LCJpYXQiOjE3MDkzOTEyOTAsImV4cCI6MTcwOTM5MTg5MH0.SAeFxnx6c9S4wMhaKmzEN6s1EtnXoBwt-RYC9MgGv_E\"",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/carts/65e33e7b220d954abff4380e/purchase",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"65e33e7b220d954abff4380e",
+								"purchase"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "loginAdmin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"superMario\",\r\n    \"password\":\"Bross\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/extend/users/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"extend",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddProductValid",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJzdXBlck1hcmlvIiwiZW1haWwiOiJzdXBlck1hcmlvIiwiYWdlIjo1Nywicm9sZSI6IkFkbWluIn0sImlhdCI6MTcwOTIyMzIxOSwiZXhwIjoxNzA5MjIzODE5fQ.KjxNuxq3O7NrF8KCtw6FTmiktUG4Ugp8jwYrbmlm_uI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\":\"Producto 1\",\r\n    \"description\":\"Detalle del producto 1\",\r\n    \"code\":\"0011-0001\",\r\n    \"price\":123.45,\r\n    \"stock\":10,\r\n    \"category\":\"Categoris 1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/products/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddProductInvalid",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJzdXBlck1hcmlvIiwiZW1haWwiOiJzdXBlck1hcmlvIiwiYWdlIjo1Nywicm9sZSI6IkFkbWluIn0sImlhdCI6MTcwOTIyMzIxOSwiZXhwIjoxNzA5MjIzODE5fQ.KjxNuxq3O7NrF8KCtw6FTmiktUG4Ugp8jwYrbmlm_uI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\":\"Detalle del producto 1\",\r\n    \"code\":\"0011-0001\",\r\n    \"stock\":10,\r\n    \"category\":\"Categoris 1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/products/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mockingproducts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/products/mocking/products",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products",
+						"mocking",
+						"products"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

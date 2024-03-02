@@ -3,7 +3,6 @@ import { validateUser } from "../../utils/validateUser.js";
 import {getAll, current, premiumUser, adminUser,  login, register} from "../../controllers/users.controller.js"
 
 
-
 export default class UsersExtendRouter extends CustomRouter {
     init() {
 
